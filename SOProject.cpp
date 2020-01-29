@@ -9,24 +9,24 @@
 SO so;
 
 void test1() {
-	so.JobArrival("programs/schopp/monitor.txt", 1);
+	so.JobArrival("programs/lucas/monitor.txt", 1);
 }
 
 void testMulti() {
-	so.JobArrival("programs/schopp/work500m.txt", 0);
-	so.JobArrival("programs/schopp/work500m.txt", 0);
+	so.JobArrival("programs/lucas/work500m.txt", 0);
+	so.JobArrival("programs/lucas/work500m.txt", 0);
 }
 
 void testPrioridade() {
-	so.JobArrival("programs/schopp/n2.txt", 1);
-	so.JobArrival("programs/schopp/work500m.txt", 0);
-	so.JobArrival("programs/schopp/n2.txt", 2);
-	so.JobArrival("programs/schopp/work500m.txt", 0);
+	so.JobArrival("programs/lucas/n2.txt", 1);
+	so.JobArrival("programs/lucas/work500m.txt", 0);
+	so.JobArrival("programs/lucas/n2.txt", 2);
+	so.JobArrival("programs/lucas/work500m.txt", 0);
 }
 
 void testIO() {
-	so.JobArrival("programs/schopp/monitor.txt", 1);
-	so.JobArrival("programs/schopp/monitor.txt", 1);
+	so.JobArrival("programs/lucas/monitor.txt", 1);
+	so.JobArrival("programs/lucas/monitor.txt", 1);
 }
 
 int main()
