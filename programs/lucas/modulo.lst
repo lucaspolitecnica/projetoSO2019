@@ -1,0 +1,10 @@
+6000               @   /6000   ; Endereço inicial 0x6000
+6000 800C  MODULO  LD  N       ; Carregar variável a ser testada
+6002 2006          JN  NEG     ; Testar se negativa
+6004 000A          JP  FIM     ; Nada a ser feito se positiva
+6006 600B  NEG     *   NUM     ; Multiplicar por menos um se negativa
+6008 900C          MM  N       ; Salvar novo valor de N
+600A 30    FIM     CN  0       ; Terminar execução do programa
+600B FF    NUM     K   -1      ; Constante -1
+600C F6    N       K   -10     ; Variável a ser tirado o módulo, mudar antes da montagem
+600D 6000          #   MODULO  ; Fim do programa, iniciar execução em MODULO

@@ -1,0 +1,13 @@
+﻿  stdafx.cpp
+  assembler.cpp
+  process.cpp
+  processlist.cpp
+  sisprog.cpp
+  so.cpp
+  SOProject.cpp
+  vm.cpp
+  Code wird generiert.
+  All 594 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Codegenerierung ist abgeschlossen.
+  SO_Project.vcxproj -> C:\Users\flo\Documents\Uni\Paulo\sistemas operacionais\SO_Project\Release\SO_Project.exe
+  SO_Project.vcxproj -> C:\Users\flo\Documents\Uni\Paulo\sistemas operacionais\SO_Project\Release\SO_Project.pdb (Full PDB)

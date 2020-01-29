@@ -1,0 +1,46 @@
+< 0.172728><Job Arrival>< 1><Added to WaitingList>
+< 173266207><Job Ready>< 1><Added to ReadyList>
+< 0.173546><Job Arrival>< 2><Added to WaitingList>
+< 183506172><Job Ready>< 2><Added to ReadyList>
+< 205556717><Context switched>< 1><New Process>2
+< 238498599><Context switched>< 2><New Process>1
+< 260491328><Context switched>< 1><New Process>2
+< 282693769><Context switched>< 2><New Process>1
+< 315476229><Context switched>< 1><New Process>2
+< 337472721><Context switched>< 2><New Process>1
+< 359471950><Context switched>< 1><New Process>2
+< 392421017><Context switched>< 2><New Process>1
+< 425400189><Context switched>< 1><New Process>2
+< 447399076><Context switched>< 2><New Process>1
+< 469391120><Context switched>< 1><New Process>2
+< 502356608><Context switched>< 2><New Process>1
+< 535331675><Context switched>< 1><New Process>2
+< 557324746><Context switched>< 2><New Process>1
+< 579316106><Context switched>< 1><New Process>2
+< 637261264><Context switched>< 2><New Process>1
+< 676950193><Context switched>< 1><New Process>2
+< 715459192><Context switched>< 2><New Process>1
+< 776046105><Context switched>< 1><New Process>2
+< 815559190><Context switched>< 2><New Process>1
+< 855538568><Context switched>< 1><New Process>2
+< 915734794><Context switched>< 2><New Process>1
+< 975757571><Context switched>< 1><New Process>2
+< 1015977793><Context switched>< 2><New Process>1
+< 1055999934><Context switched>< 1><New Process>2
+< 1115730552><Context switched>< 2><New Process>1
+< 1175784119><Context switched>< 1><New Process>2
+< 1215468942><Context switched>< 2><New Process>1
+< 1255550610><Context switched>< 1><New Process>2
+< 1315398913><Context switched>< 2><New Process>1
+< 1355708766><Context switched>< 1><New Process>2
+< 1395745960><Context switched>< 2><New Process>1
+< 1455809449><Context switched>< 1><New Process>2
+< 1495792590><Context switched>< 2><New Process>1
+< 1535644019><Context switched>< 1><New Process>2
+< 1596354091><Context switched>< 2><New Process>1
+< 1655928023><Context switched>< 1><New Process>2
+< 1695518425><Context switched>< 2><New Process>1
+< 1734539901><Context switched>< 1><New Process>2
+< 1795546238><Context switched>< 2><New Process>1
+< 1835135613><Job Ended>< 1><Deleted from ReadyList>
+< 1855936097><Job Ended>< 2><Deleted from ReadyList>

@@ -1,0 +1,97 @@
+0100               @   /0100
+0100 A15E  DUMPER  SC  GETARG              ; Despejar o byte superior do endereco inicial
+0102 A17B          SC  PUTBYTE
+0104 915A          MM  ADDRU
+0106 915D          MM  CHECK               ; Inicializar checksum
+0108 A15E          SC  GETARG              ; Despejar o byte inferior do endereco inicial
+010A A17B          SC  PUTBYTE
+010C 915B          MM  ADDRL
+010E 415D          +   CHECK               ; Atualizar checksum
+0110 915D          MM  CHECK
+0112 C3            IO  3                   ; Ignorar espaco
+0113 A15E          SC  GETARG              ; Despejar tamanho
+0115 A17B          SC  PUTBYTE
+0117 915C          MM  SIZE
+0119 415D          +   CHECK               ; Atualizar checksum
+011B 915D          MM  CHECK
+011D 32    BODY    CN  2                   ; Despejar proximo byte
+011E 815A          LD  ADDRU
+0120 A17B          SC  PUTBYTE
+0122 415D          +   CHECK               ; Atualizar checksum
+0124 915D          MM  CHECK
+0126 815B          LD  ADDRL               ; Adicionar um ao byte inferior do endereco
+0128 4159          +   ONE
+012A 915B          MM  ADDRL
+012C 1130          JZ  OVERFL              ; Lidar com overflow do byte inferior do endereco
+012E 0136          JP  UPDSIZE
+0130 815A  OVERFL  LD  ADDRU               ; Adicionar um ao byte superior do endereco
+0132 4159          +   ONE
+0134 915A          MM  ADDRU
+0136 815C  UPDSIZE LD  SIZE                ; Subtrair um do tamanho do programa
+0138 5159          -   ONE
+013A 915C          MM  SIZE
+013C 1140          JZ  BODYEND             ; Parar de carregar o programa se SIZE = 0
+013E 011D          JP  BODY                ; Recomecar loop de carga do programa
+0140 C3    BODYEND IO  3                   ; Ignorar espaco
+0141 A15E          SC  GETARG              ; Despejar o byte superior do endereco de execucao
+0143 A17B          SC  PUTBYTE
+0145 415D          +   CHECK               ; Atualizar checksum
+0147 915D          MM  CHECK
+0149 A15E          SC  GETARG              ; Despejar o byte inferior do endereco de execucao
+014B A17B          SC  PUTBYTE
+014D 415D          +   CHECK               ; Atualizar checksum
+014F 915D          MM  CHECK
+0151 8158          LD  ZERO                ; Calcular checksum
+0153 515D          -   CHECK
+0155 A17B          SC  PUTBYTE             ; Despejar checksum
+0157 30            CN  0                   ; Fim do dumper
+0158 00    ZERO    K   0                   ; Constante zero
+0159 01    ONE     K   1                   ; Constante um
+015A 00    ADDRU   K   0                   ; Byte superior de endereco
+015B 00    ADDRL   K   0                   ; Byte inferior de endereco
+015C 00    SIZE    K   0                   ; Tamanho do programa
+015D 00    CHECK   K   0                   ; Checksum
+015E ....  GETARG  $   2                   ; Subrotina para pegar e converter byte hexa do argumento ASCII para binario
+0160 C3    GETNIB1 IO  3                   ; Pegar primeiro nibble
+0161 51A5          -   NH3A                ; Testar se entre 0-9 ou A-F
+0163 2167          JN  GAASC1              ; Pular se for entre 0-9
+0165 51A2          -   NH7                 ; Compensar para entre A-F
+0167 41A3  GAASC1  +   NHA                 ; Corrigir para entre 0-9
+0169 61A4          *   NH10                ; Deslocamento em 4 bits para a esquerda
+016B 91A7          MM  UPNIB               ; Salvar nibble superior
+016D C3    GETNIB2 IO  3                   ; Pegar segundo nibble
+016E 51A5          -   NH3A                ; Testar se entre 0-9 ou A-F
+0170 2174          JN  GAASC2              ; Pular se entre 0-9
+0172 51A2          -   NH7                 ; Compensar para entre A-F
+0174 41A3  GAASC2  +   NHA                 ; Corrigir para entre 0-9
+0176 41A7          +   UPNIB               ; Adicionar nibble superior, completando o byte a ser retornado
+0178 32            CN  2                   ; Terminar subrotina
+0179 015E          JP  GETARG
+017B ....  PUTBYTE $   2                   ; Subrotina de dump de byte em hexadecimal ASCII
+017D 91A6          MM  TMPBYTE             ; Guardar byte a ser dumpado
+017F 71A4          /   NH10                ; Pegar nibble superior
+0181 61A4          *   NH10
+0183 91A7          MM  UPNIB               ; Armazenar nibble superior
+0185 71A4          /   NH10
+0187 51A3          -   NHA                 ; Testar se entre 0-9 ou A-F
+0189 218D          JN  ASCIIN1             ; Pular se for entre 0-9
+018B 41A2          +   NH7                 ; Compensar para entre A-F
+018D 41A5  ASCIIN1 +   NH3A                ; Corrigir para entre 0-9
+018F C5            IO  5                   ; Dump do nibble convertido
+0190 81A6          LD  TMPBYTE             ; Carregar nibble inferior
+0192 51A7          -   UPNIB
+0194 51A3          -   NHA                 ; Testar se entre 0-9 ou A-F
+0196 219A          JN  ASCIIN2             ; Pular se for entre 0-9
+0198 41A2          +   NH7                 ; Compensar para entre A-F
+019A 41A5  ASCIIN2 +   NH3A                ; Corrigir para entre 0-9
+019C C5            IO  5                   ; Dump do nibble convertido
+019D 81A6          LD  TMPBYTE             ; Carregar byte dumpado antes de retornar
+019F 32            CN  2                   ; Terminar subrotina
+01A0 017B          JP  PUTBYTE
+01A2 07    NH7     K   /7                  ; Constante numerica /7
+01A3 0A    NHA     K   /A                  ; Constante numerica /A
+01A4 10    NH10    K   /10                 ; Constante numerica /10
+01A5 3A    NH3A    K   /3A                 ; Constante numerica /3A
+01A6 00    TMPBYTE K   0                   ; Byte a ser dumpado
+01A7 00    UPNIB   K   0                   ; Nibble superior
+01A8 0100          #   DUMPER

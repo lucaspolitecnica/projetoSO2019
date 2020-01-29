@@ -1,0 +1,24 @@
+< 0.170013><Job Arrival>< 1><Added to WaitingList>
+< 170566294><Job Ready>< 1><Added to ReadyList>
+< 170793795><Context switched>< 1><New Process>1
+< 170960060><Context switched>< 1><New Process>1
+< 0.17096><Job Arrival>< 2><Added to WaitingList>
+< 171101008><Job Ended>< 1><Deleted from ReadyList>
+< 171184482><Job Ready>< 2><Added to ReadyList>
+< 0.171466><Job Arrival>< 3><Added to WaitingList>
+< 0.171777><Job Arrival>< 4><Added to WaitingList>
+< 181726870><Job Ready>< 3><Added to ReadyList>
+< 181848660><Job Ready>< 4><Added to ReadyList>
+
+< 203715836><Context switched>< 2><New Process>4
+< 236874614><Context switched>< 4><New Process>2
+< 258720237><Context switched>< 2><New Process>4
+< 280703729><Context switched>< 4><New Process>2
+< 313681875><Context switched>< 2><New Process>4
+< 335798104><Context switched>< 4><New Process>2
+[...]
+< 1598379368><Job Ended>< 2><Deleted from ReadyList>
+< 1614229897><Job Ended>< 4><Deleted from ReadyList>
+< 1614425582><Context switched>< 3><New Process>3
+< 1614572346><Context switched>< 3><New Process>3
+< 1614674294><Job Ended>< 3><Deleted from ReadyList>

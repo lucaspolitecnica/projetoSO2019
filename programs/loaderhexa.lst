@@ -1,0 +1,76 @@
+0000               @   /0000
+0000 30            CN  0
+0001 A05F  LOADER  SC  GETBYTE             ; Carregar o byte superior do endereco inicial
+0003 905B          MM  ADDRU
+0005 905E          MM  CHECK               ; Inicializar checksum
+0007 A05F          SC  GETBYTE             ; Carregar o byte inferior do endereco inicial
+0009 905C          MM  ADDRL
+000B 405E          +   CHECK               ; Atualizar checksum
+000D 905E          MM  CHECK
+000F A05F          SC  GETBYTE             ; Carregar tamanho em bytes
+0011 905D          MM  SIZE
+0013 405E          +   CHECK               ; Atualizar checksum
+0015 905E          MM  CHECK
+0017 A05F  BODY    SC  GETBYTE             ; Carregar proximo byte
+0019 32            CN  2                   ; Salvar no endereco em ADDRU
+001A 905B          MM  ADDRU
+001C 405E          +   CHECK               ; Atualizar checksum
+001E 905E          MM  CHECK
+0020 805C          LD  ADDRL               ; Adicionar um ao byte inferior do endereco
+0022 4059          +   ONE
+0024 905C          MM  ADDRL
+0026 102A          JZ  OVERFL              ; Lidar com overflow do byte inferior do endereco
+0028 0030          JP  UPDSIZE
+002A 805B  OVERFL  LD  ADDRU               ; Adicionar um ao byte superior do endereco
+002C 4059          +   ONE
+002E 905B          MM  ADDRU
+0030 805D  UPDSIZE LD  SIZE                ; Subtrair um do tamanho do programa
+0032 5059          -   ONE
+0034 905D          MM  SIZE
+0036 103A          JZ  LDRUN               ; Parar de carregar o programa se SIZE = 0
+0038 0017          JP  BODY                ; Recomecar loop de carga do programa
+003A A05F  LDRUN   SC  GETBYTE             ; Carregar o byte superior do endereco de execucao
+003C 905B          MM  ADDRU
+003E 405E          +   CHECK               ; Atualizar checksum
+0040 905E          MM  CHECK
+0042 A05F          SC  GETBYTE             ; Carregar o byte inferior do endereco de execucao
+0044 905C          MM  ADDRL
+0046 405E          +   CHECK               ; Atualizar checksum
+0048 905E          MM  CHECK
+004A A05F          SC  GETBYTE             ; Conferir checksum
+004C 405E          +   CHECK
+004E 1052          JZ  RUN                 ; Comecar a execucao se checksum estiver correto
+0050 0055          JP  ERROR               ; Tratar erro de checksum
+0052 32    RUN     CN  2                   ; Pular para o comeco da execucao do programa
+0053 005B          JP  ADDRU
+0055 805A  ERROR   LD  CH!                 ; Imprimir "!" para indicar erro
+0057 C6            IO  6
+0058 30            CN  0                   ; Abortar execucao
+0059 01    ONE     K   1                   ; Constante um
+005A 21    CH!     K   "!"                 ; caracter exclamacao
+005B 00    ADDRU   K   0                   ; Byte superior de endereco
+005C 00    ADDRL   K   0                   ; Byte inferior de endereco
+005D 00    SIZE    K   0                   ; Tamanho do programa
+005E 00    CHECK   K   0                   ; Checksum
+005F ....  GETBYTE $   2                   ; Subrotina para pegar e converter byte hexa ASCII para binario
+0061 C1    GETNIB1 IO  1                   ; Pegar primeiro nibble
+0062 507F          -   NH3A                ; Testar se entre 0-9 ou A-F
+0064 2068          JN  ASCIIN1             ; Pular se for entre 0-9
+0066 507C          -   NH7                 ; Compensar para entre A-F
+0068 407D  ASCIIN1 +   NHA                 ; Corrigir para entre 0-9
+006A 607E          *   NH10                ; Deslocamento em 4 bits para a esquerda
+006C 9080          MM  UPNIB               ; Salvar nibble superior
+006E C1    GETNIB2 IO  1                   ; Pegar segundo nibble
+006F 507F          -   NH3A                ; Testar se entre 0-9 ou A-F
+0071 2075          JN  ASCIIN2             ; Pular se entre 0-9
+0073 507C          -   NH7                 ; Compensar para entre A-F
+0075 407D  ASCIIN2 +   NHA                 ; Corrigir para entre 0-9
+0077 4080          +   UPNIB               ; Adicionar nibble superior, completando o byte a ser retornado
+0079 32            CN  2                   ; Terminar subrotina
+007A 005F          JP  GETBYTE
+007C 07    NH7     K   /7                  ; Constante numerica /7
+007D 0A    NHA     K   /A                  ; Constante numerica /A
+007E 10    NH10    K   /10                 ; Constante numerica /10
+007F 3A    NH3A    K   /3A                 ; Constante numerica /3A
+0080 00    UPNIB   K   0                   ; Nibble superior
+0081 0001          #   LOADER

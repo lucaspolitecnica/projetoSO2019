@@ -1,0 +1,52 @@
+0000               @   /0000
+0000 30            CN  0
+0001 C1    LOADER  IO  1                   ; Carregar o byte superior do endereco inicial
+0002 9050          MM  ADDRU
+0004 9053          MM  CHECK               ; Inicializar checksum
+0006 C1            IO  1                   ; Carregar o byte inferior do endereco inicial
+0007 9051          MM  ADDRL
+0009 4053          +   CHECK               ; Atualizar checksum
+000B 9053          MM  CHECK
+000D C1            IO  1                   ; Carregar tamanho em bytes
+000E 9052          MM  SIZE
+0010 4053          +   CHECK               ; Atualizar checksum
+0012 9053          MM  CHECK
+0014 C1    BODY    IO  1                   ; Carregar proximo byte
+0015 32            CN  2                   ; Salvar no endereco em ADDRU
+0016 9050          MM  ADDRU
+0018 4053          +   CHECK               ; Atualizar checksum
+001A 9053          MM  CHECK
+001C 8051          LD  ADDRL               ; Adicionar um ao byte inferior do endereco
+001E 404F          +   ONE
+0020 9051          MM  ADDRL
+0022 1026          JZ  OVERFL              ; Lidar com overflow do byte inferior do endereco
+0024 002C          JP  UPDSIZE
+0026 8050  OVERFL  LD  ADDRU               ; Adicionar um ao byte superior do endereco
+0028 404F          +   ONE
+002A 9050          MM  ADDRU
+002C 8052  UPDSIZE LD  SIZE                ; Subtrair um do tamanho do programa
+002E 504F          -   ONE
+0030 9052          MM  SIZE
+0032 1036          JZ  LDRUN               ; Parar de carregar o programa se SIZE = 0
+0034 0014          JP  BODY                ; Recomecar loop de carga do programa
+0036 C1    LDRUN   IO  1                   ; Carregar o byte superior do endereco de execucao
+0037 9050          MM  ADDRU
+0039 4053          +   CHECK               ; Atualizar checksum
+003B 9053          MM  CHECK
+003D C1            IO  1                   ; Carregar o byte inferior do endereco de execucao
+003E 9051          MM  ADDRL
+0040 4053          +   CHECK               ; Atualizar checksum
+0042 9053          MM  CHECK
+0044 C1            IO  1                   ; Conferir checksum
+0045 4053          +   CHECK
+0047 104B          JZ  RUN                 ; Comecar a execucao se checksum estiver correto
+0049 004E          JP  ERROR               ; Tratar erro de checksum
+004B 32    RUN     CN  2                   ; Pular para o comeco da execucao do programa
+004C 0050          JP  ADDRU
+004E 30    ERROR   CN  0                   ; TODO
+004F 01    ONE     K   1                   ; Constante um
+0050 00    ADDRU   K   0                   ; Byte superior de endereco
+0051 00    ADDRL   K   0                   ; Byte inferior de endereco
+0052 00    SIZE    K   0                   ; Tamanho do programa
+0053 00    CHECK   K   0                   ; Checksum
+0054 0001          #   LOADER

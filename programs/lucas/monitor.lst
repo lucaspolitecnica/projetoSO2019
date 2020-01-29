@@ -1,0 +1,76 @@
+4000               @   /4000
+4000 A035  MONITOR SC  GETARG              ; Carregar o byte superior do endereco inicial
+4002 9032          MM  ADDRU
+4004 A035          SC  GETARG              ; Carregar o byte inferior do endereco inicial
+4006 9033          MM  ADDRL
+4008 C3            IO  3                   ; Ignorar espaco
+4009 A035  GETSIZE SC  GETARG              ; Carregar quantidade de bytes a serem impressos
+400B 9034          MM  SIZE
+400D 8034  PRINT   LD  SIZE                ; Conferir se continua a imprimir
+400F 102F          JZ  FIM                 ; Acaba se SIZE == 0
+4011 5030          -   ONE                 ; Subtrair um de SIZE
+4013 9034          MM  SIZE
+4015 32            CN  2                   ; Carregar byte a ser impresso
+4016 8032          LD  ADDRU
+4018 A052          SC  PRTBYTE             ; Imprimir byte
+401A 8031          LD  CHESP               ; Imprimir espaco
+401C C6            IO  6
+401D 8033          LD  ADDRL               ; Adicionar um ao byte inferior do endereco
+401F 4030          +   ONE
+4021 9033          MM  ADDRL
+4023 1027          JZ  OVERFL              ; Lidar com overflow do byte inferior do endereco
+4025 000D          JP  PRINT               ; Recomecar loop
+4027 8032  OVERFL  LD  ADDRU               ; Adicionar um ao byte superior do endereco
+4029 4030          +   ONE
+402B 9032          MM  ADDRU
+402D 000D          JP  PRINT               ; Recomecar loop
+402F 30    FIM     CN  0                   ; Fim do monitor
+4030 01    ONE     K   1                   ; Constante 1
+4031 20    CHESP   K   " "                 ; Constante espaco ASCII
+4032 00    ADDRU   K   0                   ; Byte superior de endereco
+4033 00    ADDRL   K   0                   ; Byte inferior de endereco
+4034 00    SIZE    K   0                   ; Quantidade de bytes a serem impressos
+4035 ....  GETARG  $   2                   ; Subrotina para pegar e converter byte hexa do argumento ASCII para binario
+4037 C3    GETNIB1 IO  3                   ; Pegar primeiro nibble
+4038 507C          -   NH3A                ; Testar se entre 0-9 ou A-F
+403A 203E          JN  GAASC1              ; Pular se for entre 0-9
+403C 5079          -   NH7                 ; Compensar para entre A-F
+403E 407A  GAASC1  +   NHA                 ; Corrigir para entre 0-9
+4040 607B          *   NH10                ; Deslocamento em 4 bits para a esquerda
+4042 907E          MM  UPNIB               ; Salvar nibble superior
+4044 C3    GETNIB2 IO  3                   ; Pegar segundo nibble
+4045 507C          -   NH3A                ; Testar se entre 0-9 ou A-F
+4047 204B          JN  GAASC2              ; Pular se entre 0-9
+4049 5079          -   NH7                 ; Compensar para entre A-F
+404B 407A  GAASC2  +   NHA                 ; Corrigir para entre 0-9
+404D 407E          +   UPNIB               ; Adicionar nibble superior, completando o byte a ser retornado
+404F 32            CN  2                   ; Terminar subrotina
+4050 0035          JP  GETARG
+4052 ....  PRTBYTE $   2                   ; Subrotina de impressao de byte em hexadecimal ASCII
+4054 907D          MM  TMPBYTE             ; Guardar byte a ser dumpado
+4056 707B          /   NH10                ; Pegar nibble superior
+4058 607B          *   NH10
+405A 907E          MM  UPNIB               ; Armazenar nibble superior
+405C 707B          /   NH10
+405E 507A          -   NHA                 ; Testar se entre 0-9 ou A-F
+4060 2064          JN  PBASC1              ; Pular se for entre 0-9
+4062 4079          +   NH7                 ; Compensar para entre A-F
+4064 407C  PBASC1  +   NH3A                ; Corrigir para entre 0-9
+4066 C6            IO  6                   ; Print do nibble convertido
+4067 807D          LD  TMPBYTE             ; Carregar nibble inferior
+4069 507E          -   UPNIB
+406B 507A          -   NHA                 ; Testar se entre 0-9 ou A-F
+406D 2071          JN  PBASC2              ; Pular se for entre 0-9
+406F 4079          +   NH7                 ; Compensar para entre A-F
+4071 407C  PBASC2  +   NH3A                ; Corrigir para entre 0-9
+4073 C6            IO  6                   ; Print do nibble convertido
+4074 807D          LD  TMPBYTE             ; Carregar byte impresso antes de retornar
+4076 32            CN  2                   ; Terminar subrotina
+4077 0052          JP  PRTBYTE
+4079 07    NH7     K   /7                  ; Constante numerica /7
+407A 0A    NHA     K   /A                  ; Constante numerica /A
+407B 10    NH10    K   /10                 ; Constante numerica /10
+407C 3A    NH3A    K   /3A                 ; Constante numerica /3A
+407D 00    TMPBYTE K   0                   ; Byte a ser impresso
+407E 00    UPNIB   K   0                   ; Nibble superior
+407F 4000          #   MONITOR

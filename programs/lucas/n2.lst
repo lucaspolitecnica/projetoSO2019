@@ -1,0 +1,25 @@
+6010               @   /6010
+6010 8031  INIC    LD  UM
+6012 9036          MM  CONT
+6014 9033          MM  IMPAR
+6016 9035          MM  N2
+6018 8036  LOOP    LD  CONT
+601A 5034          -   N
+601C 1030          JZ  FORA
+601E 8036          LD  CONT
+6020 4031          +   UM
+6022 9036          MM  CONT
+6024 8033          LD  IMPAR
+6026 4032          +   DOIS
+6028 9033          MM  IMPAR
+602A 4035          +   N2
+602C 9035          MM  N2
+602E 0018          JP  LOOP
+6030 30    FORA    CN  0
+6031 01    UM      K   1
+6032 02    DOIS    K   2
+6033 00    IMPAR   K   0
+6034 04    N       K   4
+6035 00    N2      K   0
+6036 00    CONT    K   0
+6037 6010          #   INIC

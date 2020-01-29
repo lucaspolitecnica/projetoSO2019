@@ -1,0 +1,12 @@
+< 0.225823><Job Arrival>< 1><Added to WaitingList>
+< 226461886><Job Ready>< 1><Added to ReadyList>
+< 226748914><Process requested IO>< 1><Using IO ID>3
+< 238100386><Process used IO>< 1><Inserted into Readylist>
+< 238675469><Process requested IO>< 1><Using IO ID>3
+< 250086468><Process used IO>< 1><Inserted into Readylist>
+< 321147347><Process requested IO>< 1><Using IO ID>6
+< 336032448><Process used IO>< 1><Inserted into Readylist>
+[...]
+< 9904411717><Process requested IO>< 1><Using IO ID>6
+< 9925969969><Process used IO>< 1><Inserted into Readylist>
+< 9926484157><Job Ended>< 1><Deleted from ReadyList>

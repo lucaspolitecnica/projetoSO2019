@@ -1,0 +1,16 @@
+8001               @   /8001
+8001 8015  WORK    LD  ZERO
+8003 9014          MM  ITER
+8005 DA    LOOP    WK  10
+8006 8014          LD  ITER
+8008 4016          +   UM
+800A 9014          MM  ITER
+800C 5013          -   VEZES
+800E 1012          JZ  FORA
+8010 0005          JP  LOOP
+8012 30    FORA    CN  0
+8013 32    VEZES   K   50
+8014 00    ITER    K   0
+8015 00    ZERO    K   0
+8016 01    UM      K   1
+8017 8001          #   WORK
