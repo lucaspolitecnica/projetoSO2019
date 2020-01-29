@@ -1,0 +1,23 @@
+< 0.173391><Job Arrival>< 1><Added to WaitingList>
+< 173954528><Job Ready>< 1><Added to ReadyList>
+< 174218977><Process requested IO>< 1><Using IO ID>3
+< 0.175287><Job Arrival>< 2><Added to WaitingList>
+< 175397880><Job Ready>< 2><Added to ReadyList>
+< 175733829><Process requested IO>< 2><IO used by other Process>3
+< 185636818><Process used IO>< 1><Inserted into Readylist>
+< 186204374><Process requested IO>< 1><Using IO ID>3
+< 197550715><Process used IO>< 1><Inserted into Readylist>
+[...]
+< 324534554><Process requested IO>< 1><Using IO ID>6
+< 338555834><Process used IO>< 1><Inserted into Readylist>
+[...]
+< 10017892569><Job Ended>< 1><Deleted from ReadyList>
+< 10017981859><Process requested IO>< 2><Using IO ID>3
+< 10033151252><Process used IO>< 2><Inserted into Readylist>
+< 10033749941><Process requested IO>< 2><Using IO ID>3
+[...]
+< 19774302725><Process requested IO>< 2><Using IO ID>6
+< 19789575434><Process used IO>< 2><Inserted into Readylist>
+< 19790592520><Process requested IO>< 2><Using IO ID>6
+< 19811848007><Process used IO>< 2><Inserted into Readylist>
+< 19812301984><Job Ended>< 2><Deleted from ReadyList>
